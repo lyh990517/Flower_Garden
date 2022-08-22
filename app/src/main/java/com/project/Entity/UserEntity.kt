@@ -1,7 +1,9 @@
 package com.project.Entity
 
 data class UserEntity (
-    val id : Long
+    val id : String,
+    val pwd : String,
+    val nickName : String
         ){
-    constructor() : this(id =  0)
+    constructor() : this("","","")
 }
