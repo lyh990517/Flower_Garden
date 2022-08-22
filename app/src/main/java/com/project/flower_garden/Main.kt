@@ -42,7 +42,8 @@ class Main : Fragment() {
         return binding.root
     }
 
-
+    //TODO 로그인 화면 구현
+    //TODO 로그인 로직 구현
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
