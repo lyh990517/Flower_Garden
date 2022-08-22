@@ -1,7 +1,11 @@
 package com.project.Entity
 
 data class OwnerEntity (
-    val id : Long = 0
+    val id : String,
+    val pwd : String,
+    val nickName : String,
+    val StoreName: String,
+    val flowers : List<FlowerEntity>
         ){
-    constructor() : this(id = 0)
+    constructor() : this("","","","", emptyList())
 }

@@ -21,10 +21,18 @@
         android:id="@+id/joinOwner"
         android:name="com.project.flower_garden.JoinOwner"
         android:label="fragment_join_owner"
-        tools:layout="@layout/fragment_join_owner" />
+        tools:layout="@layout/fragment_join_owner">
+        <action
+            android:id="@+id/action_joinOwner_to_main"
+            app:destination="@id/main" />
+    </fragment>
     <fragment
         android:id="@+id/joinUser"
         android:name="com.project.flower_garden.JoinUser"
         android:label="fragment_join_user"
-        tools:layout="@layout/fragment_join_user" />
+        tools:layout="@layout/fragment_join_user" >
+        <action
+            android:id="@+id/action_joinUser_to_main"
+            app:destination="@id/main" />
+    </fragment>
 </navigation>

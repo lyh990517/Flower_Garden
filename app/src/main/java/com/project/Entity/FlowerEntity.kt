@@ -1,7 +1,8 @@
 package com.project.Entity
 
 data class FlowerEntity (
-    val id: Long = 0
+    val name: String,
+    val price: String
         ) {
-    constructor() : this(id = 0)
+    constructor() : this("","")
 }

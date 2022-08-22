@@ -1,10 +1,21 @@
 package com.project.flower_garden
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.project.Entity.FlowerEntity
+import com.project.Entity.OwnerEntity
 import com.project.flower_garden.databinding.FragmentJoinOwnerBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -22,6 +33,11 @@ class JoinOwner : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var binding: FragmentJoinOwnerBinding
+    private val auth : FirebaseAuth by lazy {
+        Firebase.auth
+    }
+    private lateinit var OwnerDB : DatabaseReference
+    private lateinit var navigationController : NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +53,43 @@ class JoinOwner : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentJoinOwnerBinding.inflate(layoutInflater)
+        OwnerDB = Firebase.database.reference.child("Owner")
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navigationController = Navigation.findNavController(view)
+        initJoinButton()
+    }
+
+    private fun initJoinButton() = with(binding){
+
+        joinButton.setOnClickListener {
+            val id = valueIdCheck.text.toString()
+            val pwd = valuePwCheck.text.toString()
+            val nickname = valueNicknameCheck.text.toString()
+            val store = valueStoreCheck.text.toString()
+            val Owner = OwnerEntity(id,pwd,nickname,store, listOf(FlowerEntity("","")))
+            OwnerDB.push().setValue(Owner)
+            auth.createUserWithEmailAndPassword(id,pwd).addOnCompleteListener { Task  ->
+                if(Task.isSuccessful){
+                    OwnerDB.push().setValue(Owner)
+                    Toast.makeText(context,"회원가입 성공", Toast.LENGTH_SHORT).show()
+                    navigationController.navigate(R.id.action_joinOwner_to_main)
+                }else{
+                    Log.e("1","${Task.exception?.message}")
+                    when(Task.exception?.message){
+                        "The email address is badly formatted." -> Toast.makeText(context,"이메일 형식으로 입력하시오.",
+                            Toast.LENGTH_SHORT).show()
+                        "The given password is invalid. [ Password should be at least 6 characters ]" -> Toast.makeText(context,"비밀번호는 6자리 이상",
+                            Toast.LENGTH_SHORT).show()
+                        "The email address is already in use by another account." -> Toast.makeText(context,"이미 존재하는 이메일",
+                            Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
     }
 
     companion object {
