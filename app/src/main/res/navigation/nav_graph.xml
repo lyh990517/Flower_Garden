@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/main">
+
+    <fragment
+        android:id="@+id/main"
+        android:name="com.project.flower_garden.Main"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_main_to_joinOwner"
+            app:destination="@id/joinOwner" />
+        <action
+            android:id="@+id/action_main_to_joinUser"
+            app:destination="@id/joinUser" />
+    </fragment>
+    <fragment
+        android:id="@+id/joinOwner"
+        android:name="com.project.flower_garden.JoinOwner"
+        android:label="fragment_join_owner"
+        tools:layout="@layout/fragment_join_owner" />
+    <fragment
+        android:id="@+id/joinUser"
+        android:name="com.project.flower_garden.JoinUser"
+        android:label="fragment_join_user"
+        tools:layout="@layout/fragment_join_user" />
+</navigation>
