@@ -5,14 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.project.flower_garden.databinding.FragmentJoinUserBinding
 import com.project.flower_garden.databinding.FragmentLoginBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -30,9 +30,7 @@ class login : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private val auth : FirebaseAuth by lazy{
-        Firebase.auth
-    }
+    private var auth : FirebaseAuth? = null
 
     private lateinit var UserDB: DatabaseReference
     private lateinit var OwnerDB: DatabaseReference
@@ -53,7 +51,7 @@ class login : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentLoginBinding.inflate(layoutInflater)
         UserDB = Firebase.database.reference.child("User")
@@ -65,13 +63,40 @@ class login : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navigationController = Navigation.findNavController(view)
-        initLoginButton()
+
+
+    }
+
+    private fun login() = with(binding) {
+        finalLoginButton.setOnClickListener {
+            signIn()
+        }
+    }
+
+    private fun signIn() = with(binding) {
+        val id = valueIdCheck.text.toString()
+        val pwd = valuePwCheck.text.toString()
+
+        if (id.isNotEmpty() && pwd.isNotEmpty()) {
+            auth?.signInWithEmailAndPassword(id, pwd)
+                ?.addOnCompleteListener(MainActivity()) { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(activity, "로그인에 성공 하였습니다.", Toast.LENGTH_SHORT).show()
+                        moveMainPage(auth?.currentUser)
+                    } else {
+                        Toast.makeText(activity, "로그인에 실패 하였습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+        }
+    }
+
+    private fun moveMainPage(user: FirebaseUser?){
+        if( user!= null){
+            navigationController.navigate(R.id.action_main_to_joinOwner)
+        }
     }
 
 
-    private fun initLoginButton() = with(binding) {
-
-    }
 
 
     companion object {
