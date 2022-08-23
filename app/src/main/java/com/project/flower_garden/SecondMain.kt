@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.project.flower_garden.databinding.FragmentSecondMainBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +22,8 @@ class SecondMain : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var binding: FragmentSecondMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -32,9 +35,24 @@ class SecondMain : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_second_main, container, false)
+        binding = FragmentSecondMainBinding.inflate(layoutInflater)
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewFlipper()
+    }
+
+    private fun viewFlipper() {
+
+        binding.viewFlipper.startFlipping()
+        binding.viewFlipper.flipInterval = 3000
+        binding.viewFlipper.setInAnimation(activity?.applicationContext, android.R.anim.slide_in_left)
+        binding.viewFlipper.setOutAnimation(activity?.applicationContext, android.R.anim.slide_out_right)
     }
 
     companion object {
