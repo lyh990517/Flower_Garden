@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_main_to_joinUser"
             app:destination="@id/joinUser" />
+        <action
+            android:id="@+id/action_main_to_login"
+            app:destination="@id/login" />
     </fragment>
     <fragment
         android:id="@+id/joinOwner"
@@ -33,6 +36,15 @@
         tools:layout="@layout/fragment_join_user" >
         <action
             android:id="@+id/action_joinUser_to_main"
+            app:destination="@id/main" />
+    </fragment>
+    <fragment
+        android:id="@+id/login"
+        android:name="com.project.flower_garden.login"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_login_to_main"
             app:destination="@id/main" />
     </fragment>
 </navigation>

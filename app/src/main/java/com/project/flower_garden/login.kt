@@ -5,9 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatButton
-import androidx.navigation.Navigation
-import com.project.flower_garden.databinding.FragmentMainBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -16,14 +13,13 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [Main.newInstance] factory method to
+ * Use the [login.newInstance] factory method to
  * create an instance of this fragment.
  */
-class Main : Fragment() {
+class login : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var binding: FragmentMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,32 +34,7 @@ class Main : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentMainBinding.inflate(layoutInflater)
-        return binding.root
-    }
-
-    //TODO 로그인 화면 구현
-    //TODO 로그인 로직 구현
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val navController = Navigation.findNavController(view)
-
-        val ownerLoginButton = view.findViewById<AppCompatButton>(R.id.ownerLoginButton)
-        val userLoginButton = view.findViewById<AppCompatButton>(R.id.userLoginButton)
-        val loginButton = view.findViewById<AppCompatButton>(R.id.loginButton)
-
-        ownerLoginButton.setOnClickListener {
-            navController.navigate(R.id.action_main_to_joinOwner)
-        }
-
-        userLoginButton.setOnClickListener {
-            navController.navigate(R.id.action_main_to_joinUser)
-        }
-
-        loginButton.setOnClickListener {
-            navController.navigate(R.id.action_main_to_login)
-        }
+        return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
     companion object {
@@ -73,12 +44,12 @@ class Main : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment Main.
+         * @return A new instance of fragment login.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Main().apply {
+            login().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
