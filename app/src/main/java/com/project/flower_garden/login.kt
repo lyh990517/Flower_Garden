@@ -5,6 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.project.flower_garden.databinding.FragmentJoinUserBinding
+import com.project.flower_garden.databinding.FragmentLoginBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +30,18 @@ class login : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private val auth : FirebaseAuth by lazy{
+        Firebase.auth
+    }
+
+    private lateinit var UserDB: DatabaseReference
+    private lateinit var OwnerDB: DatabaseReference
+
+    private lateinit var binding: FragmentLoginBinding
+
+    private lateinit var navigationController : NavController
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,8 +55,24 @@ class login : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        binding = FragmentLoginBinding.inflate(layoutInflater)
+        UserDB = Firebase.database.reference.child("User")
+        OwnerDB = Firebase.database.reference.child("Owner")
+        return binding.root
     }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navigationController = Navigation.findNavController(view)
+        initLoginButton()
+    }
+
+
+    private fun initLoginButton() = with(binding) {
+
+    }
+
 
     companion object {
         /**
