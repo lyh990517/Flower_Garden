@@ -1,6 +1,7 @@
 package com.project.flower_garden
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -31,7 +32,7 @@ class login : Fragment() {
     private var param2: String? = null
 
     private var auth : FirebaseAuth? = null
-
+    
     private lateinit var UserDB: DatabaseReference
     private lateinit var OwnerDB: DatabaseReference
 
@@ -63,36 +64,34 @@ class login : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navigationController = Navigation.findNavController(view)
-
-
-    }
-
-    private fun login() = with(binding) {
-        finalLoginButton.setOnClickListener {
-            signIn()
-        }
+        auth = FirebaseAuth.getInstance()
+        signIn()
     }
 
     private fun signIn() = with(binding) {
-        val id = valueIdCheck.text.toString()
-        val pwd = valuePwCheck.text.toString()
 
-        if (id.isNotEmpty() && pwd.isNotEmpty()) {
-            auth?.signInWithEmailAndPassword(id, pwd)
-                ?.addOnCompleteListener(MainActivity()) { task ->
-                    if (task.isSuccessful) {
-                        Toast.makeText(activity, "로그인에 성공 하였습니다.", Toast.LENGTH_SHORT).show()
-                        moveMainPage(auth?.currentUser)
-                    } else {
-                        Toast.makeText(activity, "로그인에 실패 하였습니다.", Toast.LENGTH_SHORT).show()
+        finalLoginButton.setOnClickListener {
+            val id = valueIdCheck.text.toString()
+            val pwd = valuePwCheck.text.toString()
+
+            if (id.isNotEmpty() && pwd.isNotEmpty()) {
+                auth?.signInWithEmailAndPassword(id, pwd)
+                    ?.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Log.v("로그인 성공", "email : ${id}, pwd : ${pwd}")
+                            Toast.makeText(activity, "로그인에 성공 하였습니다.", Toast.LENGTH_SHORT).show()
+                            navigationController.navigate(R.id.action_login_to_secondMain)
+                        } else {
+                            Toast.makeText(activity, "로그인에 실패 하였습니다.", Toast.LENGTH_SHORT).show()
+                        }
                     }
-                }
+            }
         }
     }
 
     private fun moveMainPage(user: FirebaseUser?){
         if( user!= null){
-            navigationController.navigate(R.id.action_main_to_joinOwner)
+            navigationController.navigate(R.id.action_login_to_secondMain)
         }
     }
 
@@ -100,15 +99,6 @@ class login : Fragment() {
 
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment login.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             login().apply {

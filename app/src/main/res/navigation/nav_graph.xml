@@ -46,5 +46,13 @@
         <action
             android:id="@+id/action_login_to_main"
             app:destination="@id/main" />
+        <action
+            android:id="@+id/action_login_to_secondMain"
+            app:destination="@id/secondMain" />
     </fragment>
+    <fragment
+        android:id="@+id/secondMain"
+        android:name="com.project.flower_garden.SecondMain"
+        android:label="fragment_second_main"
+        tools:layout="@layout/fragment_second_main" />
 </navigation>
