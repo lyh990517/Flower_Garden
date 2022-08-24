@@ -64,4 +64,12 @@
 
     </ViewFlipper>
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:menu="@menu/main_menu_bottom"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
