@@ -79,7 +79,7 @@ class login : Fragment() {
                         if (task.isSuccessful) {
                             Log.v("로그인 성공", "email : ${id}, pwd : ${pwd}")
                             Toast.makeText(activity, "로그인에 성공 하였습니다.", Toast.LENGTH_SHORT).show()
-                            navigationController.navigate(R.id.action_login_to_secondMain)
+                            navigationController.navigate(R.id.action_login_to_userMain)
                         } else {
                             Toast.makeText(activity, "로그인에 실패 하였습니다.", Toast.LENGTH_SHORT).show()
                         }
@@ -94,7 +94,7 @@ class login : Fragment() {
                         if (task.isSuccessful) {
                             Log.v("로그인 성공", "email : ${id}, pwd : ${pwd}")
                             Toast.makeText(activity, "로그인에 성공 하였습니다.", Toast.LENGTH_SHORT).show()
-                            navigationController.navigate(R.id.action_login_to_secondMain)
+                            navigationController.navigate(R.id.action_login_to_ownerMain)
                         } else {
                             Toast.makeText(activity, "로그인에 실패 하였습니다.", Toast.LENGTH_SHORT).show()
                         }

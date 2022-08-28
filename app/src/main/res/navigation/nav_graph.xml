@@ -47,12 +47,20 @@
             android:id="@+id/action_login_to_main"
             app:destination="@id/main" />
         <action
-            android:id="@+id/action_login_to_secondMain"
+            android:id="@+id/action_login_to_userMain"
             app:destination="@id/userMain" />
+        <action
+            android:id="@+id/action_login_to_ownerMain"
+            app:destination="@id/ownerMain" />
     </fragment>
     <fragment
         android:id="@+id/userMain"
         android:name="com.project.flower_garden.UserMain"
         android:label="fragment_second_main"
         tools:layout="@layout/fragment_user_main" />
+    <fragment
+        android:id="@+id/ownerMain"
+        android:name="com.project.flower_garden.OwnerMain"
+        android:label="fragment_owner_main"
+        tools:layout="@layout/fragment_owner_main" />
 </navigation>

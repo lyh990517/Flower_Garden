@@ -47,10 +47,12 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="100dp">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageButton
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_menu"/>
+            android:textAlignment="center"
+            android:src="@drawable/ic_add"
+            android:background="@drawable/owner_img_shape"/>
 
         <ImageView
             android:layout_width="match_parent"
@@ -70,6 +72,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:menu="@menu/main_menu_bottom"/>
+        app:menu="@menu/main_owner_menu_bottom"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
