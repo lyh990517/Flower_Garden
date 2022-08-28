@@ -1,10 +1,15 @@
 package com.project.flower_garden
 
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import com.project.flower_garden.databinding.FragmentOwnerMainBinding
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +26,8 @@ class OwnerMain : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var binding: FragmentOwnerMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -32,10 +39,38 @@ class OwnerMain : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_owner_main, container, false)
+        binding = FragmentOwnerMainBinding.inflate(layoutInflater)
+        return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        addStoreImg()
+    }
+
+    private fun addStoreImg() = with(binding) {
+        storeImageButton.setOnClickListener {
+            when (PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.READ_EXTERNAL_STORAGE) -> {
+                    navigatePhotos()
+                }
+            }
+        }
+    }
+
+    private fun navigatePhotos() {
+        //Content Provider
+        //SAF(Storage Access Framwork)
+        val intent = Intent(Intent.ACTION_GET_CONTENT) //SAF 기능에서 컨텐츠를 가져오는 함수
+        intent.type = "image/*" //이미지의 모든 확장자를 가져옴 png, jpg . . .
+        startActivityForResult(intent, 2000) // 콜백을 통해서 가져와야 되기 때문에 result key value를 2000으로 지정
+        //다음으로 넘어가는 액티비티에서 result 값을 넘겨줘야할 때 (액티비티와 액티비티간에 데이터를 주고받을 수 없기 때문에)
+    }
+
+
+
 
     companion object {
         /**

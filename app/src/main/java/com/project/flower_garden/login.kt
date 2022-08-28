@@ -68,11 +68,10 @@ class login : Fragment() {
     }
 
     private fun signIn() = with(binding) {
-        val id = valueIdCheck.text.toString()
-        val pwd = valuePwCheck.text.toString()
 
         finalUserLoginButton.setOnClickListener {
-
+            val id = valueIdCheck.text.toString()
+            val pwd = valuePwCheck.text.toString()
             if (id.isNotEmpty() && pwd.isNotEmpty()) {
                 auth?.signInWithEmailAndPassword(id, pwd)
                     ?.addOnCompleteListener { task ->
@@ -88,6 +87,8 @@ class login : Fragment() {
         }
 
         finalOwnerLoginButton.setOnClickListener {
+            val id = valueIdCheck.text.toString()
+            val pwd = valuePwCheck.text.toString()
             if (id.isNotEmpty() && pwd.isNotEmpty()) {
                 auth?.signInWithEmailAndPassword(id, pwd)
                     ?.addOnCompleteListener { task ->

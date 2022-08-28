@@ -37,34 +37,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="25dp" />
 
-    <ViewFlipper
-        android:id="@+id/viewFlipper"
-        android:layout_width="0dp"
-        android:layout_height="210dp"
-        android:layout_marginHorizontal="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="100dp">
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/storeImageButton"
+            android:layout_width="0dp"
+            android:layout_height="210dp"
+            android:layout_marginHorizontal="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="100dp"
             android:textAlignment="center"
             android:src="@drawable/ic_add"
             android:background="@drawable/owner_img_shape"/>
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/title"/>
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_search"/>
-
-    </ViewFlipper>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         app:layout_constraintStart_toStartOf="parent"
