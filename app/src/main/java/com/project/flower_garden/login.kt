@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -69,10 +68,10 @@ class login : Fragment() {
     }
 
     private fun signIn() = with(binding) {
+        val id = valueIdCheck.text.toString()
+        val pwd = valuePwCheck.text.toString()
 
-        finalLoginButton.setOnClickListener {
-            val id = valueIdCheck.text.toString()
-            val pwd = valuePwCheck.text.toString()
+        finalUserLoginButton.setOnClickListener {
 
             if (id.isNotEmpty() && pwd.isNotEmpty()) {
                 auth?.signInWithEmailAndPassword(id, pwd)
@@ -87,16 +86,23 @@ class login : Fragment() {
                     }
             }
         }
-    }
 
-    private fun moveMainPage(user: FirebaseUser?){
-        if( user!= null){
-            navigationController.navigate(R.id.action_login_to_secondMain)
+        finalOwnerLoginButton.setOnClickListener {
+            if (id.isNotEmpty() && pwd.isNotEmpty()) {
+                auth?.signInWithEmailAndPassword(id, pwd)
+                    ?.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Log.v("로그인 성공", "email : ${id}, pwd : ${pwd}")
+                            Toast.makeText(activity, "로그인에 성공 하였습니다.", Toast.LENGTH_SHORT).show()
+                            navigationController.navigate(R.id.action_login_to_secondMain)
+                        } else {
+                            Toast.makeText(activity, "로그인에 실패 하였습니다.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+            }
         }
+
     }
-
-
-
 
     companion object {
         @JvmStatic

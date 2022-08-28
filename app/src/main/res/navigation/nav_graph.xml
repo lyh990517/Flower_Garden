@@ -48,11 +48,11 @@
             app:destination="@id/main" />
         <action
             android:id="@+id/action_login_to_secondMain"
-            app:destination="@id/secondMain" />
+            app:destination="@id/userMain" />
     </fragment>
     <fragment
-        android:id="@+id/secondMain"
-        android:name="com.project.flower_garden.SecondMain"
+        android:id="@+id/userMain"
+        android:name="com.project.flower_garden.UserMain"
         android:label="fragment_second_main"
-        tools:layout="@layout/fragment_second_main" />
+        tools:layout="@layout/fragment_user_main" />
 </navigation>
