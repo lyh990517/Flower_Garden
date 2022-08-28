@@ -47,12 +47,11 @@ class UserMain : Fragment() {
         viewFlipper()
     }
 
-    private fun viewFlipper() {
-
-        binding.viewFlipper.startFlipping()
-        binding.viewFlipper.flipInterval = 3000
-        binding.viewFlipper.setInAnimation(activity?.applicationContext, android.R.anim.slide_in_left)
-        binding.viewFlipper.setOutAnimation(activity?.applicationContext, android.R.anim.slide_out_right)
+    private fun viewFlipper() = with(binding) {
+        viewFlipper.startFlipping()
+        viewFlipper.flipInterval = 3000
+        viewFlipper.setInAnimation(activity?.applicationContext, android.R.anim.slide_in_left)
+        viewFlipper.setOutAnimation(activity?.applicationContext, android.R.anim.slide_out_right)
     }
 
     companion object {

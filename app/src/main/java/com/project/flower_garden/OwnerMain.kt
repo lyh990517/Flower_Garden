@@ -1,8 +1,10 @@
 package com.project.flower_garden
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -52,9 +54,10 @@ class OwnerMain : Fragment() {
 
     private fun addStoreImg() = with(binding) {
         storeImageButton.setOnClickListener {
+            Log.d(TAG, "눌렸음")
             when (PackageManager.PERMISSION_GRANTED) {
-                ContextCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.READ_EXTERNAL_STORAGE) -> {
-                    navigatePhotos()
+                        ContextCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.READ_EXTERNAL_STORAGE) -> {
+                            navigatePhotos()
                 }
             }
         }
