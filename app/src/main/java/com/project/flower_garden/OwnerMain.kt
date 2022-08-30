@@ -19,7 +19,9 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import com.project.Entity.FlowerEntity
 import com.project.flower_garden.databinding.FragmentOwnerMainBinding
+import java.nio.file.Files.find
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -74,6 +76,7 @@ public class OwnerMain : Fragment() {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 if(snapshot.child("nickName").value != null) {
                     val storeName = snapshot.child("nickName").value.toString()
+                    nickNameTextView.text = storeName
                 }
             }
 
