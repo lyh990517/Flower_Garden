@@ -15,10 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
@@ -72,27 +69,32 @@ public class OwnerMain : Fragment() {
         storeName()
     }
 
-    private fun getCurrentUserID(): String {
-        if (auth.currentUser == null) {
-            Toast.makeText(activity, "로그인에 성공 하였습니다.", Toast.LENGTH_SHORT).show()
-        }
+    private fun storeName() = with(binding) {
+        OwnerDB.addChildEventListener(object: ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                if(snapshot.child("nickName").value != null) {
+                    val storeName = snapshot.child("nickName").value.toString()
+                }
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
-
-        private fun storeName() = with(binding) {
-
-        val database = Firebase.database("https://flowergarden-80899-default-rtdb.firebaseio.com/")
-
-
-        val nickname = auth.currentUser?.uid.orEmpty()
-        val cureentUserDB = OwnerDB.child(getCurrentUserID())
-        val Owner = mutableMapOf<String, Any>()
-        Owner["nickName"] = nickname
-        cureentUserDB.updateChildren(Owner)
-        nickNameTextView.text = Owner.toString()
-    }
-
-
-
 
     private fun addStoreImg() = with(binding) {
         storeImageButton.setOnClickListener {
