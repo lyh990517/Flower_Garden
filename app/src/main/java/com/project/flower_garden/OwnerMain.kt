@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -71,24 +72,27 @@ public class OwnerMain : Fragment() {
         storeName()
     }
 
-    private fun storeName() = with(binding) {
+    private fun getCurrentUserID(): String {
+        if (auth.currentUser == null) {
+            Toast.makeText(activity, "로그인에 성공 하였습니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+        private fun storeName() = with(binding) {
 
         val database = Firebase.database("https://flowergarden-80899-default-rtdb.firebaseio.com/")
 
-        OwnerDB.child("nickName")
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val value = dataSnapshot.getValue<String>()
-                    nickNameTextView.text = value
-                    Log.v("로그인", "nickname : $nickName")
-                }
 
-                override fun onCancelled(databaseError: DatabaseError) {
-                    //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
-                }
-            })
-
+        val nickname = auth.currentUser?.uid.orEmpty()
+        val cureentUserDB = OwnerDB.child(getCurrentUserID())
+        val Owner = mutableMapOf<String, Any>()
+        Owner["nickName"] = nickname
+        cureentUserDB.updateChildren(Owner)
+        nickNameTextView.text = Owner.toString()
     }
+
+
+
 
     private fun addStoreImg() = with(binding) {
         storeImageButton.setOnClickListener {
@@ -109,7 +113,6 @@ public class OwnerMain : Fragment() {
         startActivityForResult(intent, 2000) // 콜백을 통해서 가져와야 되기 때문에 result key value를 2000으로 지정
         //다음으로 넘어가는 액티비티에서 result 값을 넘겨줘야할 때 (액티비티와 액티비티간에 데이터를 주고받을 수 없기 때문에)
     }
-
 
 
 
