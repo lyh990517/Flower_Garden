@@ -18,8 +18,9 @@
 
     <ImageButton
         android:src="@drawable/ic_menu"
+        android:layout_marginTop="40dp"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:background="@null"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,8 +36,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="25dp" />
+        android:layout_marginTop="40dp" />
 
+
+        <TextView
+            android:id="@+id/nickNameTextView"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            android:fontFamily="@font/font"
+            tools:text="동호네 꽃집"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/storeImageButton"
@@ -45,8 +59,8 @@
             android:layout_marginHorizontal="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="100dp"
+            app:layout_constraintTop_toBottomOf="@id/nickNameTextView"
+            android:layout_marginTop="10dp"
             android:textAlignment="center"
             android:src="@drawable/ic_add"
             android:background="@drawable/owner_img_shape"/>

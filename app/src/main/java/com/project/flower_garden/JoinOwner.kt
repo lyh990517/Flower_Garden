@@ -1,5 +1,6 @@
 package com.project.flower_garden
 
+import android.content.ClipData
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
@@ -17,6 +19,7 @@ import com.google.firebase.ktx.Firebase
 import com.project.Entity.FlowerEntity
 import com.project.Entity.OwnerEntity
 import com.project.flower_garden.databinding.FragmentJoinOwnerBinding
+import java.net.PasswordAuthentication
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,6 +32,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class JoinOwner : Fragment() {
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -54,6 +58,7 @@ class JoinOwner : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentJoinOwnerBinding.inflate(layoutInflater)
         OwnerDB = Firebase.database.reference.child("Owner")
+        val view = inflater.inflate(R.layout.fragment_join_owner, container, false)
         return binding.root
     }
 
@@ -63,7 +68,7 @@ class JoinOwner : Fragment() {
         initJoinButton()
     }
 
-    private fun initJoinButton() = with(binding){
+    private fun initJoinButton(): View? = with(binding){
 
         joinButton.setOnClickListener {
             val id = valueIdCheck.text.toString()
@@ -72,6 +77,12 @@ class JoinOwner : Fragment() {
             val store = valueStoreCheck.text.toString()
             val Owner = OwnerEntity(id,pwd,nickname,store, listOf(FlowerEntity("","")))
             OwnerDB.push().setValue(Owner)
+            val bundle = Bundle()
+            bundle.putString("name", nickname)
+            val fragment = OwnerMain()
+            fragment.arguments = bundle
+            fragmentManager?.beginTransaction()?.replace(R.id.nav_graph, fragment)?.commit()
+
             auth.createUserWithEmailAndPassword(id,pwd).addOnCompleteListener { Task  ->
                 if(Task.isSuccessful){
                     OwnerDB.push().setValue(Owner)
@@ -90,6 +101,7 @@ class JoinOwner : Fragment() {
                 }
             }
         }
+        return view
     }
 
     companion object {

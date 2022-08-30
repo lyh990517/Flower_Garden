@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
@@ -26,6 +27,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class login : Fragment() {
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -76,6 +78,7 @@ class login : Fragment() {
                 auth?.signInWithEmailAndPassword(id, pwd)
                     ?.addOnCompleteListener { task ->
                         if (task.isSuccessful) {
+                            val userNickName = task.getResult().user?.uid
                             Log.v("로그인 성공", "email : ${id}, pwd : ${pwd}")
                             Toast.makeText(activity, "로그인에 성공 하였습니다.", Toast.LENGTH_SHORT).show()
                             navigationController.navigate(R.id.action_login_to_userMain)
@@ -87,6 +90,7 @@ class login : Fragment() {
         }
 
         finalOwnerLoginButton.setOnClickListener {
+
             val id = valueIdCheck.text.toString()
             val pwd = valuePwCheck.text.toString()
             if (id.isNotEmpty() && pwd.isNotEmpty()) {

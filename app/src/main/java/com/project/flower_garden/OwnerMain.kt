@@ -1,5 +1,6 @@
 package com.project.flower_garden
 
+import android.content.ClipData
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,26 +10,47 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
+import com.project.Entity.FlowerEntity
+import com.project.Entity.OwnerEntity
 import com.project.flower_garden.databinding.FragmentOwnerMainBinding
+import java.security.acl.Owner
 
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-
 /**
  * A simple [Fragment] subclass.
  * Use the [OwnerMain.newInstance] factory method to
  * create an instance of this fragment.
  */
-class OwnerMain : Fragment() {
+public class OwnerMain : Fragment() {
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
     private lateinit var binding: FragmentOwnerMainBinding
+    private val auth : FirebaseAuth by lazy {
+        Firebase.auth
+    }
+
+    private lateinit var OwnerDB : DatabaseReference
+    private lateinit var navigationController : NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,14 +64,40 @@ class OwnerMain : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
+        OwnerDB = Firebase.database.reference.child("Owner")
         binding = FragmentOwnerMainBinding.inflate(layoutInflater)
+        val view = inflater.inflate(R.layout.fragment_owner_main, container, false)
+        return view
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         addStoreImg()
+        val args = this.arguments
+        val inputData = args?.get("name")
+        binding.nickNameTextView.text = inputData.toString()
+    }
+
+    private fun storeName() = with(binding) {
+        val database = Firebase.database("https://console.firebase.google.com/project/flowergarden-80899/database/flowergarden-80899-default-rtdb/data")
+        val myRef = database.getReference("message")
+        myRef.setValue(binding.nickNameTextView.text.toString())
+        nickNameTextView.text =
+
+            myRef.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    val value = dataSnapshot.getValue<String>()
+                    Log.d(TAG, "Value is: $value")
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            }).toString()
     }
 
     private fun addStoreImg() = with(binding) {
