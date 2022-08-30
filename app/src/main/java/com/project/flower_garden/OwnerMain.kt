@@ -1,19 +1,16 @@
 package com.project.flower_garden
 
-import android.content.ClipData
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.system.Os.uname
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -24,10 +21,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import com.project.Entity.FlowerEntity
-import com.project.Entity.OwnerEntity
 import com.project.flower_garden.databinding.FragmentOwnerMainBinding
-import java.security.acl.Owner
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -74,30 +68,26 @@ public class OwnerMain : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         addStoreImg()
-        val args = this.arguments
-        val inputData = args?.get("name")
-        binding.nickNameTextView.text = inputData.toString()
+        storeName()
     }
 
     private fun storeName() = with(binding) {
-        val database = Firebase.database("https://console.firebase.google.com/project/flowergarden-80899/database/flowergarden-80899-default-rtdb/data")
-        val myRef = database.getReference("message")
-        myRef.setValue(binding.nickNameTextView.text.toString())
-        nickNameTextView.text =
 
-            myRef.addValueEventListener(object : ValueEventListener {
+        val database = Firebase.database("https://flowergarden-80899-default-rtdb.firebaseio.com/")
+
+        OwnerDB.child("nickName")
+            .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
                     val value = dataSnapshot.getValue<String>()
-                    Log.d(TAG, "Value is: $value")
+                    nickNameTextView.text = value
+                    Log.v("로그인", "nickname : $nickName")
                 }
 
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
+                override fun onCancelled(databaseError: DatabaseError) {
+                    //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
                 }
+            })
 
-            }).toString()
     }
 
     private fun addStoreImg() = with(binding) {

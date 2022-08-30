@@ -1,6 +1,7 @@
 package com.project.flower_garden
 
 import android.content.ClipData
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,12 +14,17 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.project.Entity.FlowerEntity
 import com.project.Entity.OwnerEntity
 import com.project.flower_garden.databinding.FragmentJoinOwnerBinding
+import org.w3c.dom.Text
 import java.net.PasswordAuthentication
 
 // TODO: Rename parameter arguments, choose names that match
@@ -77,16 +83,26 @@ class JoinOwner : Fragment() {
             val store = valueStoreCheck.text.toString()
             val Owner = OwnerEntity(id,pwd,nickname,store, listOf(FlowerEntity("","")))
             OwnerDB.push().setValue(Owner)
-            val bundle = Bundle()
-            bundle.putString("name", nickname)
-            val fragment = OwnerMain()
-            fragment.arguments = bundle
-            fragmentManager?.beginTransaction()?.replace(R.id.nav_graph, fragment)?.commit()
 
             auth.createUserWithEmailAndPassword(id,pwd).addOnCompleteListener { Task  ->
                 if(Task.isSuccessful){
                     OwnerDB.push().setValue(Owner)
                     Toast.makeText(context,"회원가입 성공", Toast.LENGTH_SHORT).show()
+
+                    val database = Firebase.database("https://flowergarden-80899-default-rtdb.firebaseio.com/")
+
+                    OwnerDB.child("nickName")
+                        .addValueEventListener(object : ValueEventListener {
+                            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                val value = dataSnapshot.getValue<String>()
+                                Log.v("로그인 성공", "email : ${id}, pwd : ${pwd}, nickname : ${value}")
+                            }
+
+                            override fun onCancelled(databaseError: DatabaseError) {
+                                //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
+                            }
+                        })
+
                     navigationController.navigate(R.id.action_joinOwner_to_main)
                 }else{
                     Log.e("1","${Task.exception?.message}")

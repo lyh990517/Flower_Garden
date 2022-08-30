@@ -11,8 +11,12 @@ import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.project.flower_garden.databinding.FragmentLoginBinding
 
@@ -97,9 +101,26 @@ class login : Fragment() {
                 auth?.signInWithEmailAndPassword(id, pwd)
                     ?.addOnCompleteListener { task ->
                         if (task.isSuccessful) {
+//                            val database = Firebase.database("https://flowergarden-80899-default-rtdb.firebaseio.com/")
+//
+//                            OwnerDB.child("nickName")
+//                                .addValueEventListener(object : ValueEventListener {
+//                                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+//                                        val value = dataSnapshot.getValue<String>()
+//                                        Log.v("로그인 성공", "email : ${id}, pwd : ${pwd}, nickname : ${value}")
+//                                    }
+//
+//                                    override fun onCancelled(databaseError: DatabaseError) {
+//                                        //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
+//                                    }
+//                                })
+
                             Log.v("로그인 성공", "email : ${id}, pwd : ${pwd}")
                             Toast.makeText(activity, "로그인에 성공 하였습니다.", Toast.LENGTH_SHORT).show()
                             navigationController.navigate(R.id.action_login_to_ownerMain)
+
+
+
                         } else {
                             Toast.makeText(activity, "로그인에 실패 하였습니다.", Toast.LENGTH_SHORT).show()
                         }

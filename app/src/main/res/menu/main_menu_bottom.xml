@@ -6,9 +6,9 @@
         android:title="홈" />
 
     <item
-        android:id="@+id/ic_search_bottom"
-        android:icon="@drawable/ic_search_bottom"
-        android:title="검색" />
+        android:id="@+id/ic_bottom_map"
+        android:icon="@drawable/ic_bottom_map"
+        android:title="내 주변" />
 
     <item
         android:id="@+id/ic_heart"
@@ -18,5 +18,5 @@
     <item
         android:id="@+id/ic_information"
         android:icon="@drawable/ic_information"
-        android:title="내 정보" />
+        android:title="내 정보"/>
 </menu>
