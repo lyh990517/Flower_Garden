@@ -1,25 +1,31 @@
-package com.project.flower_garden
+package com.project.UserMain
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import com.project.flower_garden.databinding.FragmentUserMainBinding
+import com.project.flower_garden.R
+import com.project.flower_garden.databinding.FragmentLikeBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
+/**
+ * A simple [Fragment] subclass.
+ * Use the [Like.newInstance] factory method to
+ * create an instance of this fragment.
+ */
+class Like : Fragment() {
 
-class UserMain : Fragment() {
+    private lateinit var binding: FragmentLikeBinding
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
-    private lateinit var binding: FragmentUserMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,48 +39,35 @@ class UserMain : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
-        binding = FragmentUserMainBinding.inflate(layoutInflater)
+        binding = FragmentLikeBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewFlipper()
-        moveFragment(R.id.ic_home)
-
+        moveFragment()
     }
 
-
-    private fun moveFragment(fragment: Int) = with(binding) {
+    private fun moveFragment() = with(binding) {
         val navController = Navigation.findNavController(requireView())
 
-        bottomNavigationView.setOnItemSelectedListener { item->
+        bottomNavigationView.setOnItemSelectedListener { item ->
             when(item.itemId) {
-                R.id.ic_heart -> {
-                    navController.navigate(R.id.action_userMain_to_like)
+                R.id.ic_home -> {
+                    navController.navigate(R.id.action_like_to_userMain)
                     return@setOnItemSelectedListener true
                 }
                 R.id.ic_bottom_map -> {
-                    navController.navigate(R.id.action_userMain_to_nearLocation)
+                    navController.navigate(R.id.action_like_to_nearLocation)
                     return@setOnItemSelectedListener true
                 }
                 R.id.ic_information -> {
-                    navController.navigate(R.id.action_userMain_to_information)
+                    navController.navigate(R.id.action_like_to_information)
+                    return@setOnItemSelectedListener true
                 }
                 else -> { false }
-
             }
-            return@setOnItemSelectedListener true
         }
-
-    }
-
-    private fun viewFlipper() = with(binding) {
-        viewFlipper.startFlipping()
-        viewFlipper.flipInterval = 3000
-        viewFlipper.setInAnimation(activity?.applicationContext, android.R.anim.slide_in_left)
-        viewFlipper.setOutAnimation(activity?.applicationContext, android.R.anim.slide_out_right)
     }
 
     companion object {
@@ -84,12 +77,12 @@ class UserMain : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment SecondMain.
+         * @return A new instance of fragment Like.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            UserMain().apply {
+            Like().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

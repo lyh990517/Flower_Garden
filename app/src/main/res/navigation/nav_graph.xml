@@ -57,10 +57,68 @@
         android:id="@+id/userMain"
         android:name="com.project.flower_garden.UserMain"
         android:label="fragment_second_main"
-        tools:layout="@layout/fragment_user_main" />
+        tools:layout="@layout/fragment_user_main" >
+        <action
+            android:id="@+id/action_userMain_to_like"
+            app:destination="@id/like" />
+        <action
+            android:id="@+id/action_userMain_to_information"
+            app:destination="@id/information" />
+        <action
+            android:id="@+id/action_userMain_to_nearLocation"
+            app:destination="@id/nearLocation" />
+    </fragment>
     <fragment
         android:id="@+id/ownerMain"
         android:name="com.project.flower_garden.OwnerMain"
         android:label="fragment_owner_main"
         tools:layout="@layout/fragment_owner_main" />
+    <fragment
+        android:id="@+id/information"
+        android:name="com.project.UserMain.Information"
+        android:label="fragment_information"
+        tools:layout="@layout/fragment_information" >
+        <action
+            android:id="@+id/action_information_to_userMain"
+            app:destination="@id/userMain" />
+        <action
+            android:id="@+id/action_information_to_nearLocation"
+            app:destination="@id/nearLocation" />
+        <action
+            android:id="@+id/action_information_to_like"
+            app:destination="@id/like" />
+    </fragment>
+    <fragment
+        android:id="@+id/like"
+        android:name="com.project.UserMain.Like"
+        android:label="fragment_like"
+        tools:layout="@layout/fragment_like" >
+        <action
+            android:id="@+id/action_like_to_nearLocation"
+            app:destination="@id/nearLocation" />
+        <action
+            android:id="@+id/action_like_to_information"
+            app:destination="@id/information" />
+        <action
+            android:id="@+id/action_like_to_userMain"
+            app:destination="@id/userMain" />
+    </fragment>
+    <fragment
+        android:id="@+id/nearLocation"
+        android:name="com.project.UserMain.NearLocation"
+        android:label="fragment_near_location"
+        tools:layout="@layout/fragment_near_location" >
+        <action
+            android:id="@+id/action_nearLocation_to_information"
+            app:destination="@id/information" />
+        <action
+            android:id="@+id/action_nearLocation_to_userMain2"
+            app:destination="@id/userMain" />
+        <action
+            android:id="@+id/action_nearLocation_to_like"
+            app:destination="@id/like" />
+        <action
+            android:id="@+id/action_nearLocation_to_userMain"
+            app:destination="@id/userMain" />
+    </fragment>
 </navigation>

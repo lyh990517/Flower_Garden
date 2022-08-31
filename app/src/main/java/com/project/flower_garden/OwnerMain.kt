@@ -68,16 +68,13 @@ public class OwnerMain : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         addStoreImg()
-        storeName()
-    }
-
-    private fun storeName() = with(binding) {
         OwnerDB.addChildEventListener(object: ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 if(snapshot.child("nickName").value != null) {
                     val storeName = snapshot.child("nickName").value.toString()
-                    nickNameTextView.text = storeName
+                    binding.nickNameTextView.text = storeName
                 }
+
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
@@ -97,6 +94,12 @@ public class OwnerMain : Fragment() {
             }
 
         })
+        storeName()
+
+    }
+
+    private fun storeName() = with(binding) {
+
     }
 
     private fun addStoreImg() = with(binding) {
