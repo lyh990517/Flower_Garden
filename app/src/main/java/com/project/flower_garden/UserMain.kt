@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.project.flower_garden.databinding.FragmentUserMainBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -48,8 +51,9 @@ class UserMain : Fragment() {
 
     private fun moveFragment(fragment: Int) = with(binding) {
         val navController = Navigation.findNavController(requireView())
-
+//        val navController = NavHostFragment.findNavController(fragment = UserMain())
         bottomNavigationView.setOnItemSelectedListener { item->
+
             when(item.itemId) {
                 R.id.ic_heart -> {
                     navController.navigate(R.id.action_userMain_to_like)
@@ -97,3 +101,4 @@ class UserMain : Fragment() {
             }
     }
 }
+

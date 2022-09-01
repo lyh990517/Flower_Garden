@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_bottom_map" android:state_checked="true"
+        android:title="내 주변" />
+    <item android:drawable="@drawable/ic_bottom_map" android:state_checked="false"
+        android:title="내 주변" />
+
+    <item android:drawable="@drawable/ic_heart" android:state_checked="true"
+        android:title="즐겨찾기" />
+    <item android:drawable="@drawable/ic_heart" android:state_checked="false"
+        android:title="즐겨찾기" />
+
+    <item android:drawable="@drawable/ic_home" android:state_checked="true"
+        android:title="홈" />
+    <item android:drawable="@drawable/ic_home" android:state_checked="false"
+        android:title="홈" />
+
+    <item android:drawable="@drawable/ic_information" android:state_checked="true"
+        android:title="내 정보" />
+    <item android:drawable="@drawable/ic_information" android:state_checked="false"
+        android:title="내 정보" />
+</selector>
